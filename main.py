@@ -43,3 +43,9 @@ for x in range(0, len(myList)):
 print(" ")
 images = np.array(images)
 classNo = np.array(classNo)
+
+
+X_train, X_test, y_train, y_test = train_test_split(images, classNo, test_size=testRatio)
+X_train, X_validation, y_train, y_validation = train_test_split(X_train, y_train, test_size=validationRatio)
+steps_per_epoch_val = len(X_train)
+validation_steps = len(X_test)
