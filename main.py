@@ -23,4 +23,23 @@ steps_per_epoch_val = 2000
 epochs_val = 20
 imageDimesions = (32, 32, 3)
 testRatio = 0.2
-validationRatio = 0.2  
+validationRatio = 0.2
+
+count = 0
+images = []
+classNo = []
+myList = os.listdir(path)
+print("Total Classes Detected:", len(myList))
+noOfClasses = len(myList)
+print("Importing Classes.....")
+for x in range(0, len(myList)):
+    myPicList = os.listdir(path + "/" + str(count))
+    for y in myPicList:
+        curImg = cv2.imread(path + "/" + str(count) + "/" + y)
+        images.append(curImg)
+        classNo.append(count)
+    print(count, end=" ")
+    count += 1
+print(" ")
+images = np.array(images)
+classNo = np.array(classNo)
