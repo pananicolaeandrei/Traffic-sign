@@ -61,3 +61,7 @@ assert(X_test.shape[0]==y_test.shape[0]), "The number of images in not equal to 
 assert(X_train.shape[1:]==(imageDimesions))," The dimesions of the Training images are wrong "
 assert(X_validation.shape[1:]==(imageDimesions))," The dimesionas of the Validation images are wrong "
 assert(X_test.shape[1:]==(imageDimesions))," The dimesionas of the Test images are wrong"
+
+
+data=pd.read_csv(labelFile)
+print("data shape ",data.shape,type(data))
