@@ -115,3 +115,12 @@ dataGen.fit(X_train)
 batches = dataGen.flow(X_train, y_train,
                        batch_size=20)
 X_batch, y_batch = next(batches)
+
+
+fig, axs = plt.subplots(1, 15, figsize=(20, 5))
+fig.tight_layout()
+
+for i in range(15):
+    axs[i].imshow(X_batch[i].reshape(imageDimesions[0], imageDimesions[1]))
+    axs[i].axis('off')
+plt.show()
