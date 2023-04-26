@@ -124,3 +124,8 @@ for i in range(15):
     axs[i].imshow(X_batch[i].reshape(imageDimesions[0], imageDimesions[1]))
     axs[i].axis('off')
 plt.show()
+
+
+y_train = to_categorical(y_train, noOfClasses)
+y_validation = to_categorical(y_validation, noOfClasses)
+y_test = to_categorical(y_test, noOfClasses)
