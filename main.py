@@ -116,7 +116,6 @@ batches = dataGen.flow(X_train, y_train,
                        batch_size=20)
 X_batch, y_batch = next(batches)
 
-
 fig, axs = plt.subplots(1, 15, figsize=(20, 5))
 fig.tight_layout()
 
@@ -124,7 +123,6 @@ for i in range(15):
     axs[i].imshow(X_batch[i].reshape(imageDimesions[0], imageDimesions[1]))
     axs[i].axis('off')
 plt.show()
-
 
 y_train = to_categorical(y_train, noOfClasses)
 y_validation = to_categorical(y_validation, noOfClasses)
@@ -136,7 +134,7 @@ def myModel():
     size_of_Filter = (5, 5)
     size_of_Filter2 = (3, 3)
     size_of_pool = (2, 2)
-    no_Of_Nodes = 500  
+    no_Of_Nodes = 500
     model = Sequential()
     model.add((Conv2D(no_Of_Filters, size_of_Filter, input_shape=(imageDimesions[0], imageDimesions[1], 1),
                       activation='relu')))
@@ -145,4 +143,6 @@ def myModel():
 
     model.add((Conv2D(no_Of_Filters // 2, size_of_Filter2, activation='relu')))
 
-
+    model.add((Conv2D(no_Of_Filters // 2, size_of_Filter2, activation='relu')))
+    model.add(MaxPooling2D(pool_size=size_of_pool))
+    model.add(Dropout(0.5))
