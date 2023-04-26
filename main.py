@@ -89,7 +89,7 @@ X_validation = np.array(list(map(preprocessing, X_validation)))
 X_test = np.array(list(map(preprocessing, X_test)))
 
 
-X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], X_train.shape[2], 1, 5)
+X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], X_train.shape[2], 1)
 X_validation = X_validation.reshape(X_validation.shape[0], X_validation.shape[1], X_validation.shape[2], 1)
 X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], X_test.shape[2], 1)
 
