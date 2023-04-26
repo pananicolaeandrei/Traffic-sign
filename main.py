@@ -161,3 +161,14 @@ print(model.summary())
 history = model.fit_generator(dataGen.flow(X_train, y_train, batch_size=batch_size_val),
                               steps_per_epoch=steps_per_epoch_val, epochs=epochs_val,
                               validation_data=(X_validation, y_validation), shuffle=1)
+
+
+score = model.evaluate(X_test, y_test, verbose=0)
+print('Test Score:', score[0])
+print('Test Accuracy:', score[1])
+
+pickle_out = open("model_trained.p", "wb")
+pickle.dump(model, pickle_out)
+pickle_out.close()
+cv2.waitKey(0)
+
