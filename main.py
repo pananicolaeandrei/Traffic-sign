@@ -68,7 +68,7 @@ print("data shape ", data.shape, type(data))
 
 
 def grayscale(img):
-    img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)  
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     return img
 
 
@@ -79,13 +79,13 @@ def equalize(img):
 
 def preprocessing(img):
     img = grayscale(img)
-    img = cv2.GaussianBlur(img, (5, 5), 0)
     img = equalize(img)
-    img = img / 255
+    img = img / 255  
     return img
 
 
 X_train = np.array(list(map(preprocessing, X_train)))
 X_validation = np.array(list(map(preprocessing, X_validation)))
 X_test = np.array(list(map(preprocessing, X_test)))
+
 
