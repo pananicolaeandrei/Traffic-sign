@@ -94,4 +94,17 @@ X_validation = X_validation.reshape(X_validation.shape[0], X_validation.shape[1]
 X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], X_test.shape[2], 1)
 
 
+dataGen = ImageDataGenerator(width_shift_range=0.1,
+
+                             height_shift_range=0.1,
+                             zoom_range=0.2,
+                             shear_range=0.1,
+                             rotation_range='10')
+dataGen.fit(X_train)
+batches = dataGen.flow(X_train, y_train,
+                       batch_size=20,
+                       shuffle=True)
+X_batch, y_batch = next(batches)
+
+
 
