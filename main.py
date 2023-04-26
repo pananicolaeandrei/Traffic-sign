@@ -1,4 +1,3 @@
-
 import numpy as np
 import matplotlib.pyplot as plt
 from keras.models import Sequential
@@ -14,7 +13,6 @@ import os
 import pandas as pd
 import random
 from keras.preprocessing.image import ImageDataGenerator
-
 
 path = "myData"
 labelFile = 'labels.csv'
@@ -44,24 +42,50 @@ print(" ")
 images = np.array(images)
 classNo = np.array(classNo)
 
-
 X_train, X_test, y_train, y_test = train_test_split(images, classNo, test_size=testRatio)
 X_train, X_validation, y_train, y_validation = train_test_split(X_train, y_train, test_size=validationRatio)
 steps_per_epoch_val = len(X_train)
 validation_steps = len(X_test)
 
-
 print("Data Shapes")
-print("Train",end = "");print(X_train.shape,y_train.shape)
-print("Validation",end = "");print(X_validation.shape,y_validation.shape)
-print("Test",end = "");print(X_test.shape,y_test.shape)
-assert(X_train.shape[0]==y_train.shape[0]), "The number of images in not equal to the number of lables in training set"
-assert(X_validation.shape[0]==y_validation.shape[0]), "The number of images in not equal to the number of lables in validation set"
-assert(X_test.shape[0]==y_test.shape[0]), "The number of images in not equal to the number of lables in test set"
-assert(X_train.shape[1:]==(imageDimesions))," The dimesions of the Training images are wrong "
-assert(X_validation.shape[1:]==(imageDimesions))," The dimesionas of the Validation images are wrong "
-assert(X_test.shape[1:]==(imageDimesions))," The dimesionas of the Test images are wrong"
+print("Train", end="");
+print(X_train.shape, y_train.shape)
+print("Validation", end="");
+print(X_validation.shape, y_validation.shape)
+print("Test", end="");
+print(X_test.shape, y_test.shape)
+assert (X_train.shape[0] == y_train.shape[
+    0]), "The number of images in not equal to the number of lables in training set"
+assert (X_validation.shape[0] == y_validation.shape[
+    0]), "The number of images in not equal to the number of lables in validation set"
+assert (X_test.shape[0] == y_test.shape[0]), "The number of images in not equal to the number of lables in test set"
+assert (X_train.shape[1:] == (imageDimesions)), " The dimesions of the Training images are wrong "
+assert (X_validation.shape[1:] == (imageDimesions)), " The dimesionas of the Validation images are wrong "
+assert (X_test.shape[1:] == (imageDimesions)), " The dimesionas of the Test images are wrong"
+
+data = pd.read_csv(labelFile)
+print("data shape ", data.shape, type(data))
 
 
-data=pd.read_csv(labelFile)
-print("data shape ",data.shape,type(data))
+def grayscale(img):
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)  
+    return img
+
+
+def equalize(img):
+    img = cv2.equalizeHist(img)
+    return img
+
+
+def preprocessing(img):
+    img = grayscale(img)
+    img = cv2.GaussianBlur(img, (5, 5), 0)
+    img = equalize(img)
+    img = img / 255
+    return img
+
+
+X_train = np.array(list(map(preprocessing, X_train)))
+X_validation = np.array(list(map(preprocessing, X_validation)))
+X_test = np.array(list(map(preprocessing, X_test)))
+
