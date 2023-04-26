@@ -67,6 +67,22 @@ data = pd.read_csv(labelFile)
 print("data shape ", data.shape, type(data))
 
 
+num_of_samples = []
+cols = 5
+num_classes = "noOfClasses"
+fig, axs = plt.subplots(nrows=num_classes, ncols=cols, figsize=(5, 300))
+fig.tight_layout()
+for i in range(cols):
+    for j, row in data.iterrows():
+        x_selected = X_train[y_train == j]
+        axs[j][i].imshow(x_selected[random.randint(0, len(x_selected) - 1), :, :], cmap=get_cmap("gray"))  
+        axs[j][i].axis("off")
+        if i == 2:
+            axs[j][i].set_title(str(j) + "-" + row["Name"])
+            num_of_samples.append(len(x_selected))
+
+
+
 def grayscale(img):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     return img
