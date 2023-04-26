@@ -150,8 +150,14 @@ def myModel():
     model.add(Flatten())
     model.add(Dense(no_Of_Nodes, activation='relu'))
     model.add(Dropout(0.5))
-    model.add(Dense(noOfClasses, activation='softmax')) 
+    model.add(Dense(noOfClasses, activation='softmax'))
     # COMPILE MODEL
     model.compile(Adam(lr=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
     return model
 
+
+model = myModel()
+print(model.summary())
+history = model.fit_generator(dataGen.flow(X_train, y_train, batch_size=batch_size_val),
+                              steps_per_epoch=steps_per_epoch_val, epochs=epochs_val,
+                              validation_data=(X_validation, y_validation), shuffle=1)
