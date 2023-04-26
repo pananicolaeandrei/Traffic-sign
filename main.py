@@ -66,21 +66,19 @@ assert (X_test.shape[1:] == (imageDimesions)), " The dimesionas of the Test imag
 data = pd.read_csv(labelFile)
 print("data shape ", data.shape, type(data))
 
-
 num_of_samples = []
 cols = 5
-num_classes = "noOfClasses"
+num_classes = noOfClasses
 fig, axs = plt.subplots(nrows=num_classes, ncols=cols, figsize=(5, 300))
 fig.tight_layout()
 for i in range(cols):
     for j, row in data.iterrows():
         x_selected = X_train[y_train == j]
-        axs[j][i].imshow(x_selected[random.randint(0, len(x_selected) - 1), :, :], cmap=get_cmap("gray"))  
+        axs[j][i].imshow(x_selected[random.randint(0, len(x_selected) - 1), :, :], cmap=plt.get_cmap("gray"))
         axs[j][i].axis("off")
         if i == 2:
             axs[j][i].set_title(str(j) + "-" + row["Name"])
             num_of_samples.append(len(x_selected))
-
 
 
 def grayscale(img):
@@ -96,7 +94,7 @@ def equalize(img):
 def preprocessing(img):
     img = grayscale(img)
     img = equalize(img)
-    img = img / 255  
+    img = img / 255
     return img
 
 
@@ -104,11 +102,9 @@ X_train = np.array(list(map(preprocessing, X_train)))
 X_validation = np.array(list(map(preprocessing, X_validation)))
 X_test = np.array(list(map(preprocessing, X_test)))
 
-
 X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], X_train.shape[2], 1)
 X_validation = X_validation.reshape(X_validation.shape[0], X_validation.shape[1], X_validation.shape[2], 1)
 X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], X_test.shape[2], 1)
-
 
 dataGen = ImageDataGenerator(width_shift_range=0.1,
 
@@ -121,6 +117,3 @@ batches = dataGen.flow(X_train, y_train,
                        batch_size=20,
                        shuffle=True)
 X_batch, y_batch = next(batches)
-
-
-
