@@ -146,3 +146,12 @@ def myModel():
     model.add((Conv2D(no_Of_Filters // 2, size_of_Filter2, activation='relu')))
     model.add(MaxPooling2D(pool_size=size_of_pool))
     model.add(Dropout(0.5))
+
+    model.add(Flatten())
+    model.add(Dense(no_Of_Nodes, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(noOfClasses, activation='softmax')) 
+    # COMPILE MODEL
+    model.compile(Adam(lr=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+    return model
+
