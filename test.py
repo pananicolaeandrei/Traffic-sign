@@ -13,3 +13,6 @@ cap = cv2.VideoCapture(0)
 cap.set(3, frameWidth)
 cap.set(4, frameHeight)
 cap.set(10, brightness)
+
+pickle_in = open("model_trained.p", "rb")
+model = pickle.load(pickle_in)
