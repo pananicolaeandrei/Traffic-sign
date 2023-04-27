@@ -135,3 +135,17 @@ while True:
     img = img.reshape(1, 32, 32, 1)
     cv2.putText(imgOriginal, "CLASS: ", (20, 35), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
     cv2.putText(imgOriginal, "PROBABILITY: ", (20, 75), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
+
+    predictions = model.predict(img)
+    classIndex = np.argmax(predictions, axis=-1)
+    probabilityValue = np.amax(predictions)
+    if probabilityValue > threshold:
+        cv2.putText(imgOriginal, str(classIndex) + " " + str(getCalssName(classIndex)), (120, 35), font, 0.75,
+                    (0, 0, 255), 2,
+                    cv2.LINE_AA)
+        cv2.putText(imgOriginal, str(round(probabilityValue * 100, 2)) + "%", (180, 75), font, 0.75, (0, 0, 255), 2,
+                    cv2.LINE_AA)
+    cv2.imshow("Result", imgOriginal)
+
+    if cv2.waitKey(1) and 0xFF == ord('q'):
+        break
