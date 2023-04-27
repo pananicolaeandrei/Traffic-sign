@@ -27,3 +27,10 @@ def equalize(img):
     img = cv2.equalizeHist(img)
 
     return img
+
+
+def preprocessing(img):
+    img = grayscale(img)
+    img = equalize(img)
+    img = img / 255
+    return img
