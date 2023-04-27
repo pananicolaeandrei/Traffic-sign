@@ -2,7 +2,6 @@ import numpy as np
 import cv2
 import pickle
 
-
 frameWidth = 640
 frameHeight = 480
 brightness = 180
@@ -16,3 +15,9 @@ cap.set(10, brightness)
 
 pickle_in = open("model_trained.p", "rb")
 model = pickle.load(pickle_in)
+
+
+def grayscale(img):
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    return img
