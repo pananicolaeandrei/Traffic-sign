@@ -123,3 +123,15 @@ def getCalssName(classNo):
         return 'End of no passing'
     elif classNo == 42:
         return 'End of no passing by vehicles over 3.5 metric tons'
+
+
+while True:
+    success, imgOriginal = cap.read()
+
+    img = np.asarray(imgOriginal)
+    img = cv2.resize(img, (32, 32))
+    img = preprocessing(img)
+    cv2.imshow("Processed Image", img)
+    img = img.reshape(1, 32, 32, 1)
+    cv2.putText(imgOriginal, "CLASS: ", (20, 35), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
+    cv2.putText(imgOriginal, "PROBABILITY: ", (20, 75), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
