@@ -1,11 +1,15 @@
-import numpy as np
+import time
+
 import cv2
-import pickle
+import numpy as np
+import pyautogui
+import tensorflow as tf
 
 frameWidth = 640
 frameHeight = 480
 brightness = 180
 threshold = 0.75
+freeze_threshold = 0.9
 font = cv2.FONT_HERSHEY_SIMPLEX
 
 cap = cv2.VideoCapture(0)
@@ -13,8 +17,8 @@ cap.set(3, frameWidth)
 cap.set(4, frameHeight)
 cap.set(10, brightness)
 
-pickle_in = open("model_trained.p", "rb")
-model = pickle.load(pickle_in)
+model = tf.keras.models.load_model('my_model.h5')
+last_recognition_time = time.time()
 
 
 def grayscale(img):
@@ -139,13 +143,23 @@ while True:
     predictions = model.predict(img)
     classIndex = np.argmax(predictions, axis=-1)
     probabilityValue = np.amax(predictions)
+
     if probabilityValue > threshold:
         cv2.putText(imgOriginal, str(classIndex) + " " + str(getCalssName(classIndex)), (120, 35), font, 0.75,
-                    (0, 0, 255), 2,
-                    cv2.LINE_AA)
+                    (0, 0, 255), 2, cv2.LINE_AA)
         cv2.putText(imgOriginal, str(round(probabilityValue * 100, 2)) + "%", (180, 75), font, 0.75, (0, 0, 255), 2,
                     cv2.LINE_AA)
+
+        if probabilityValue > freeze_threshold:
+            screenshot = pyautogui.screenshot()
+            screenshot_image = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
+
+            cv2.imshow("Screenshot", screenshot_image)
+            cv2.waitKey(0)  # Wait for a key press to continue
+
+            cv2.destroyWindow("Screenshot")
+
     cv2.imshow("Result", imgOriginal)
 
-    if cv2.waitKey(1) and 0xFF == ord('q'):
+    if cv2.waitKey(1) == ord('q'):
         break
